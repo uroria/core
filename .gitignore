@@ -1,4 +1,14 @@
+
+# Intellij
 .idea
+*.iml
+*.ipr
+*.iws
+out/
+
+# Gradle
 .gradle
 build
+
+# Maven
 target
