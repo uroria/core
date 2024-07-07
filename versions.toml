@@ -1,0 +1,47 @@
+[versions]
+
+# Dependencies
+fastutil = "8.5.13"
+gson = "2.10.1"
+slf4j = "1.7.36"
+sentry = "7.11.0"
+
+paperApi = "1.21-R0.1-SNAPSHOT"
+
+# Code generation/annotations
+lombok = "1.18.34"
+jetbrainsAnnotations = "23.0.0"
+
+# Testing
+junit-jupiter = "5.9.3"
+junit-platform = "1.9.3"
+
+# Gradle plugins
+shadow = "8.1.1"
+
+[libraries]
+
+# Dependencies
+fastutil = { group = "it.unimi.dsi", name = "fastutil", version.ref = "fastutil" }
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+slf4j = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j"}
+sentry = { group = "io.sentry", name = "sentry", version.ref = "sentry" }
+
+paperApi = { group = "io.papermc.paper", name = "paper-api", version.ref = "paperApi" }
+
+# Core generation/annotations
+lombok = { group = "org.projectlombok", name = "lombok", version.ref = "lombok" }
+jetbrainsAnnotations = { group = "org.jetbrains", name = "annotations", version.ref = "jetbrainsAnnotations" }
+
+# Testing
+junit-api = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.ref = "junit-jupiter" }
+junit-engine = { group = "org.junit.jupiter", name = "junit-jupiter-engine", version.ref = "junit-jupiter" }
+junit-params = { group = "org.junit.jupiter", name = "junit-jupiter-params", version.ref = "junit-jupiter" }
+junit-suite-api = { group = "org.junit.platform", name = "junit-platform-suite-api", version.ref = "junit-platform" }
+junit-suite-engine = { group = "org.junit.platform", name = "junit-platform-suite-engine", version.ref = "junit-platform" }
+
+[bundles]
+junit = ["junit-api", "junit-engine", "junit-params", "junit-suite-api", "junit-suite-engine"]
+
+[plugins]
+shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }

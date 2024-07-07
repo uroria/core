@@ -1,0 +1,8 @@
+name: "Uroria-Core"
+main: "com.uroria.core.paper.PaperPlugin"
+version: "@version@"
+description: "@description@"
+load: STARTUP
+author: "The Uroria contributors"
+prefix: "uroria-core"
+website: "https://www.uroria.com"
