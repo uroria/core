@@ -5,6 +5,7 @@ fastutil = "8.5.13"
 gson = "2.10.1"
 slf4j = "1.7.36"
 sentry = "7.11.0"
+toml4j = "0.7.2"
 
 paperApi = "1.21-R0.1-SNAPSHOT"
 velocityApi = "3.3.0-SNAPSHOT"
@@ -27,6 +28,7 @@ fastutil = { group = "it.unimi.dsi", name = "fastutil", version.ref = "fastutil"
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 slf4j = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j"}
 sentry = { group = "io.sentry", name = "sentry", version.ref = "sentry" }
+toml4j = { group = "com.moandjiezana.toml", name = "toml4j", version.ref = "toml4j" }
 
 paperApi = { group = "io.papermc.paper", name = "paper-api", version.ref = "paperApi" }
 velocityApi = { group = "com.velocitypowered", name = "velocity-api", version.ref = "velocityApi" }

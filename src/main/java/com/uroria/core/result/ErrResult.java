@@ -51,22 +51,22 @@ final class ErrResult<T, E> implements Result<T, E> {
     }
 
     @Override
-    public <U> Result<? extends U, E> map(@NonNull Function<? super T, ? extends U> mapper) {
+    public <U> Result<U, E> map(@NonNull Function<? super T, ? extends U> mapper) {
         return Result.err(this.err);
     }
 
     @Override
-    public <U> Result<T, ? extends U> mapErr(@NonNull Function<? super E, ? extends U> mapper) {
+    public <U> Result<T, U> mapErr(@NonNull Function<? super E, ? extends U> mapper) {
         return Result.err(mapper.apply(this.err));
     }
 
     @Override
-    public <U> Result<? extends U, E> flatMap(@NonNull Function<? super T, ? extends Result<? extends U, E>> mapper) {
+    public <U> Result<U, E> flatMap(@NonNull Function<? super T, ? extends Result<U, E>> mapper) {
         return Result.err(this.err);
     }
 
     @Override
-    public <U> Result<T, ? extends U> flatMapErr(@NonNull Function<? super E, ? extends Result<T, ? extends U>> mapper) {
+    public <U> Result<T, U> flatMapErr(@NonNull Function<? super E, ? extends Result<T, U>> mapper) {
         return mapper.apply(this.err);
     }
 

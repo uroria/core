@@ -21,6 +21,11 @@ public interface Option<T> {
         return new NoneOption<>();
     }
 
+    static <T> Option<T> value(@Nullable T value) {
+        if (value == null) return none();
+        return some(value);
+    }
+
     boolean isSome();
 
     boolean isNone();
@@ -48,4 +53,9 @@ public interface Option<T> {
     @TestOnly
     @Nullable
     T unwrap();
+
+    @Nullable
+    default T unwrapOrNull() {
+        return unwrap();
+    }
 }

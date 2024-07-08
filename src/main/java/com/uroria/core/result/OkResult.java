@@ -51,22 +51,22 @@ final class OkResult<T, E> implements Result<T, E> {
     }
 
     @Override
-    public <U> Result<? extends U, E> map(@NonNull Function<? super T, ? extends U> mapper) {
+    public <U> Result<U, E> map(@NonNull Function<? super T, ? extends U> mapper) {
         return Result.ok(mapper.apply(this.value));
     }
 
     @Override
-    public <U> Result<T, ? extends U> mapErr(@NonNull Function<? super E, ? extends U> mapper) {
+    public <U> Result<T, U> mapErr(@NonNull Function<? super E, ? extends U> mapper) {
         return Result.ok(this.value);
     }
 
     @Override
-    public <U> Result<? extends U, E> flatMap(@NonNull Function<? super T, ? extends Result<? extends U, E>> mapper) {
+    public <U> Result<U, E> flatMap(@NonNull Function<? super T, ? extends Result<U, E>> mapper) {
         return mapper.apply(this.value);
     }
 
     @Override
-    public <U> Result<T, ? extends U> flatMapErr(@NonNull Function<? super E, ? extends Result<T, ? extends U>> mapper) {
+    public <U> Result<T, U> flatMapErr(@NonNull Function<? super E, ? extends Result<T, U>> mapper) {
         return Result.ok(this.value);
     }
 

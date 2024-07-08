@@ -17,6 +17,7 @@ dependencies {
     api(libs.gson)
     api(libs.slf4j)
     api(libs.sentry)
+    api(libs.toml4j)
 
     compileOnlyApi(libs.lombok)
     annotationProcessor(libs.lombok)

@@ -35,13 +35,13 @@ public interface Result<T, E> {
 
     void ifOkOrErr(@NonNull Consumer<? super T> okAction, @NonNull Consumer<? super E> errAction);
 
-    <U> Result<? extends U, E> map(@NonNull Function<? super T, ? extends U> mapper);
+    <U> Result<U, E> map(@NonNull Function<? super T, ? extends U> mapper);
 
-    <U> Result<T, ? extends U> mapErr(@NonNull Function<? super E, ? extends U> mapper);
+    <U> Result<T, U> mapErr(@NonNull Function<? super E, ? extends U> mapper);
 
-    <U> Result<? extends U, E> flatMap(@NonNull Function<? super T, ? extends Result<? extends U, E>> mapper);
+    <U> Result<U, E> flatMap(@NonNull Function<? super T, ? extends Result<U, E>> mapper);
 
-    <U> Result<T, ? extends U> flatMapErr(@NonNull Function<? super E, ? extends Result<T, ? extends U>> mapper);
+    <U> Result<T, U> flatMapErr(@NonNull Function<? super E, ? extends Result<T, U>> mapper);
 
     Result<? extends T, ? extends E> or(Supplier<? extends Result<? extends T, ? extends E>> supplier);
 
