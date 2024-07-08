@@ -17,7 +17,7 @@ Fabric is currently under construction.
 
 ## Downloads
 
-Coming soon.
+Coming soon on [our Website](https://www.uroria.com).
 
 ## License
 
