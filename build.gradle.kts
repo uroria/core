@@ -28,6 +28,11 @@ dependencies {
     testImplementation(libs.bundles.junit)
 }
 
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
 allprojects {
     apply<JavaLibraryPlugin>()
     apply<MavenPublishPlugin>()
@@ -40,50 +45,47 @@ allprojects {
         mavenCentral()
     }
 
-    java {
-        withSourcesJar()
-        withJavadocJar()
+    java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
-        toolchain.languageVersion = JavaLanguageVersion.of(21)
-    }
+    tasks {
+        withType<Test> {
+            useJUnitPlatform()
 
-    tasks.withType<Test> {
-        useJUnitPlatform()
-
-        minHeapSize = "256m"
-        maxHeapSize = "512m"
-    }
-
-    tasks.withType<JavaCompile> {
-        options.encoding = "UTF-8"
-    }
-
-    tasks.withType<Javadoc> {
-        (options as? StandardJavadocDocletOptions)?.apply {
-            encoding = "UTF-8"
-
-            addBooleanOption("html5", true)
-            addStringOption("-release", "21")
+            minHeapSize = "256m"
+            maxHeapSize = "512m"
         }
-    }
 
-    tasks.processResources {
-        from(sourceSets.main.get().resources.srcDirs()) {
-            filter<ReplaceTokens>("tokens" to mapOf("version" to project.version.toString()))
-            filter<ReplaceTokens>("tokens" to mapOf("description" to projectDescription))
+        withType<JavaCompile> {
+            options.encoding = "UTF-8"
+        }
 
+        withType<Javadoc> {
+            (options as? StandardJavadocDocletOptions)?.apply {
+                encoding = "UTF-8"
+
+                addBooleanOption("html5", true)
+                addStringOption("-release", "21")
+                addStringOption("Xdoclint:-missing", "-quiet")
+            }
+        }
+
+        withType<Jar> {
             duplicatesStrategy = DuplicatesStrategy.INCLUDE
+        }
+
+        processResources {
+            from(sourceSets.main.get().resources.srcDirs()) {
+                filter<ReplaceTokens>("tokens" to mapOf("version" to project.version.toString()))
+                filter<ReplaceTokens>("tokens" to mapOf("description" to projectDescription))
+
+                duplicatesStrategy = DuplicatesStrategy.INCLUDE
+            }
         }
     }
 }
 
 subprojects {
     apply<ShadowPlugin>()
-
-    dependencies {
-        implementation(rootProject)
-        annotationProcessor(rootProject)
-    }
 }
 
 sourceSets {

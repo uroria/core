@@ -3,6 +3,9 @@ repositories {
 }
 
 dependencies {
+    implementation(rootProject)
+    annotationProcessor(rootProject)
+
     compileOnly(libs.paperApi)
     annotationProcessor(libs.paperApi)
 
