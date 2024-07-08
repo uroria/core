@@ -1,6 +1,7 @@
 
 # Intellij
 .idea
+!.idea/icon.png
 *.iml
 *.ipr
 *.iws
