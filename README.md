@@ -14,3 +14,39 @@ of many utilities like **Results, Options and Config files**.
 
 Currently supported platforms are **Paper and Velocity**. 
 Fabric is currently under construction.
+
+## Downloads
+
+Coming soon.
+
+## License
+
+This project is licensed under the [**Apache 2.0 License**](LICENSE).
+
+## Building
+
+First, download or clone this repository.
+
+Run the following command inside the root directory:
+
+*For unix-like systems:*
+```shell
+./gradlew shadowJar
+```
+
+*For windows systems:*
+```shell
+./gradlew.bat shadowJar
+```
+
+You can find the jars all builds in following directories:
+
+| Platform                            | Path                 |
+|-------------------------------------|----------------------|
+| Universal (Paper, Velocity, Fabric) | universal/build/libs |
+| Paper                               | paper/build/libs     |
+| Velocity                            | velocity/build/libs  |
+| Fabric                              | fabric/build/libs    |
+
+**Note:** Only Jar-Files with the `-all.jar` extension are executable
+on all platforms.
