@@ -9,6 +9,8 @@ toml4j = "0.7.2"
 
 paperApi = "1.21-R0.1-SNAPSHOT"
 velocityApi = "3.3.0-SNAPSHOT"
+fabricLoader = "0.15.11"
+fabricApi = "0.100.3+1.21"
 
 # Code generation/annotations
 lombok = "1.18.34"
@@ -32,6 +34,8 @@ toml4j = { group = "com.moandjiezana.toml", name = "toml4j", version.ref = "toml
 
 paperApi = { group = "io.papermc.paper", name = "paper-api", version.ref = "paperApi" }
 velocityApi = { group = "com.velocitypowered", name = "velocity-api", version.ref = "velocityApi" }
+fabricLoader = { group = "net.fabricmc", name = "fabric-loader", version.ref = "fabricLoader" }
+fabricApi = { group = "net.fabricmc", name = "fabric-api", version.ref = "fabricApi" }
 
 # Core generation/annotations
 lombok = { group = "org.projectlombok", name = "lombok", version.ref = "lombok" }

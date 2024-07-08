@@ -10,4 +10,5 @@ dependencyResolutionManagement {
 
 include("paper")
 include("velocity")
+include("fabric")
 include("universal")
