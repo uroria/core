@@ -9,3 +9,5 @@ dependencyResolutionManagement {
 }
 
 include("paper")
+include("velocity")
+include("universal")

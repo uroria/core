@@ -1,0 +1,1 @@
+{"id":"uroria-core","name":"Uroria-Core","version":"@version@","description":"@description@","url":"https://www.uroria.com","authors":["The Uroria contributors"],"dependencies":[],"main":"com.uroria.core.velocity.VelocityPlugin"}

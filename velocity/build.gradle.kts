@@ -3,8 +3,8 @@ repositories {
 }
 
 dependencies {
-    compileOnly(libs.paperApi)
-    annotationProcessor(libs.paperApi)
+    compileOnly(libs.velocityApi)
+    annotationProcessor(libs.velocityApi)
 
     testImplementation(libs.bundles.junit)
 }

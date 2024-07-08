@@ -7,6 +7,7 @@ slf4j = "1.7.36"
 sentry = "7.11.0"
 
 paperApi = "1.21-R0.1-SNAPSHOT"
+velocityApi = "3.3.0-SNAPSHOT"
 
 # Code generation/annotations
 lombok = "1.18.34"
@@ -28,6 +29,7 @@ slf4j = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j"}
 sentry = { group = "io.sentry", name = "sentry", version.ref = "sentry" }
 
 paperApi = { group = "io.papermc.paper", name = "paper-api", version.ref = "paperApi" }
+velocityApi = { group = "com.velocitypowered", name = "velocity-api", version.ref = "velocityApi" }
 
 # Core generation/annotations
 lombok = { group = "org.projectlombok", name = "lombok", version.ref = "lombok" }
