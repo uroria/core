@@ -27,5 +27,5 @@ jobs:
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
         run: |
-          ./gradlew jreleaserConfig clean publish jreleaserDeploy
+          ./gradlew clean publish 
           echo "Version: ${SHORT_COMMIT_HASH}" >> $GITHUB_STEP_SUMMARY
