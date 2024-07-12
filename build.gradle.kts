@@ -1,13 +1,11 @@
 import com.github.jengelman.gradle.plugins.shadow.ShadowPlugin
 import org.apache.tools.ant.filters.ReplaceTokens
-import org.jreleaser.model.Active
-import java.time.Duration
 
 plugins {
     `java-library`
     `maven-publish`
     alias(libs.plugins.shadow)
-    alias(libs.plugins.jreleaser)
+    id("com.gradleup.nmcp") version("0.0.8")
 }
 
 version = System.getenv("CORE_VERSION") ?: "dev"
@@ -96,59 +94,18 @@ sourceSets {
     }
 }
 
+nmcp {
+    publishAllPublications {
+        project(":")
+
+        username = System.getenv("SONATYPE_USERNAME")
+        password = System.getenv("SONATYPE_PASSWORD")
+        publicationType = "AUTOMATIC"
+    }
+}
+
+
 tasks {
-
-    jreleaser {
-
-        signing {
-            active = Active.ALWAYS
-            armored = true
-        }
-        deploy {
-            maven {
-                mavenCentral {
-                    create("sonatype") {
-                        active = Active.ALWAYS
-                        url = "https://central.sonatype.com/api/v1/publisher"
-                        stagingRepository("target/staging-deploy")
-
-                        val sonatypeUsername = System.getenv("SONATYPE_USERNAME")
-                        val sonatypePassword = System.getenv("SONATYPE_PASSWORD")
-
-                        if (sonatypeUsername != null) {
-                            username.set(sonatypeUsername)
-                            password.set(sonatypePassword)
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    /*
-    nexusPublishing {
-        useStaging.set(true)
-        this.packageGroup.set("com.uroria")
-
-        transitionCheckOptions {
-            maxRetries.set(360) // 1h
-            delayBetween.set(Duration.ofSeconds(10))
-        }
-
-        repositories.sonatype {
-            nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"))
-            snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
-
-            val sonatypeUsername = System.getenv("SONATYPE_USERNAME")
-            val sonatypePassword = System.getenv("SONATYPE_PASSWORD")
-
-            if (sonatypeUsername != null) {
-                username.set(sonatypeUsername)
-                password.set(sonatypePassword)
-            }
-        }
-    }
-*/
     publishing.publications.create<MavenPublication>("maven") {
         groupId = "com.uroria"
         artifactId = "core"
@@ -196,16 +153,4 @@ tasks {
             }
         }
     }
-
-    /*
-    signing {
-        isRequired = System.getenv("CI") != null
-
-        val privateKey = System.getenv("GPG_PRIVATE_KEY")
-        val keyPassphrase = System.getenv("GPG_PASSPHRASE")
-        useInMemoryPgpKeys(privateKey, keyPassphrase)
-
-        sign(publishing.publications)
-    }
-     */
 }

@@ -30,5 +30,5 @@ jobs:
           CORE_VERSION: ${{ steps.vars.outputs.short_commit_hash }}
           CORE_CHANNEL: release
         run: |
-          ./gradlew clean jreleaserFullRelease
+          ./gradlew clean publishAllPublicationsToCentralPortal
           echo "Version: ${SHORT_COMMIT_HASH}" >> $GITHUB_STEP_SUMMARY
