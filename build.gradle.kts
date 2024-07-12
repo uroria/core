@@ -98,19 +98,20 @@ sourceSets {
 jreleaser {
     deploy {
         maven {
-            mavenCentral {
-                create("sonatypeCentralPortal") {
+            mavenCentral.create("sonatypeCentralPortal") {
                     active = Active.ALWAYS
                     url = "https://central.sonatype.com/api/v1/publisher"
                     username = System.getenv("SONATYPE_USERNAME")
                     password = System.getenv("SONATYPE_PASSWORD")
                     //applyMavenCentralRules = true
 
+                    github {}
+
                     stagingRepository("target/staging-deploy")
-                }
             }
         }
     }
+    release.github.enabled = false
 }
 
 tasks {
