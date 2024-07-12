@@ -1,11 +1,12 @@
 import com.github.jengelman.gradle.plugins.shadow.ShadowPlugin
 import org.apache.tools.ant.filters.ReplaceTokens
+import org.jreleaser.model.Active
 
 plugins {
     `java-library`
     `maven-publish`
     alias(libs.plugins.shadow)
-    id("com.gradleup.nmcp") version("0.0.8")
+    alias(libs.plugins.jreleaser)
 }
 
 version = System.getenv("CORE_VERSION") ?: "dev"
@@ -94,16 +95,23 @@ sourceSets {
     }
 }
 
-nmcp {
-    publishAllPublications {
-        project(":")
+jreleaser {
+    deploy {
+        maven {
+            mavenCentral {
+                create("sonatypeCentralPortal") {
+                    active = Active.ALWAYS
+                    url = "https://central.sonatype.com/api/v1/publisher"
+                    username = System.getenv("SONATYPE_USERNAME")
+                    password = System.getenv("SONATYPE_PASSWORD")
+                    //applyMavenCentralRules = true
 
-        username = System.getenv("SONATYPE_USERNAME")
-        password = System.getenv("SONATYPE_PASSWORD")
-        publicationType = "AUTOMATIC"
+                    stagingRepository("target/staging-deploy")
+                }
+            }
+        }
     }
 }
-
 
 tasks {
     publishing.publications.create<MavenPublication>("maven") {

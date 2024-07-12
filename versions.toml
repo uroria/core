@@ -22,6 +22,7 @@ junit-platform = "1.9.3"
 
 # Gradle plugins
 shadow = "8.1.1"
+jreleaser = "1.13.1"
 
 [libraries]
 
@@ -53,3 +54,4 @@ junit = ["junit-api", "junit-engine", "junit-params", "junit-suite-api", "junit-
 
 [plugins]
 shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }
+jreleaser = { id = "org.jreleaser", version.ref = "jreleaser" }
