@@ -1,13 +1,13 @@
 import com.github.jengelman.gradle.plugins.shadow.ShadowPlugin
 import org.apache.tools.ant.filters.ReplaceTokens
+import org.jreleaser.model.Active
 import java.time.Duration
 
 plugins {
     `java-library`
     `maven-publish`
     alias(libs.plugins.shadow)
-    signing
-    alias(libs.plugins.nexusPublish)
+    alias(libs.plugins.jreleaser)
 }
 
 version = System.getenv("CORE_VERSION") ?: "dev"
@@ -38,7 +38,6 @@ java {
 
 allprojects {
     apply<JavaLibraryPlugin>()
-    apply<MavenPublishPlugin>()
 
     group = "com.uroria"
     version = rootProject.version
@@ -98,6 +97,35 @@ sourceSets {
 }
 
 tasks {
+
+    jreleaser {
+
+        signing {
+            active = Active.ALWAYS
+            armored = true
+        }
+        deploy {
+            maven {
+                mavenCentral {
+                    create("sonatype") {
+                        active = Active.ALWAYS
+                        url = "https://central.sonatype.com/api/v1/publisher"
+                        stagingRepository("target/staging-deploy")
+
+                        val sonatypeUsername = System.getenv("SONATYPE_USERNAME")
+                        val sonatypePassword = System.getenv("SONATYPE_PASSWORD")
+
+                        if (sonatypeUsername != null) {
+                            username.set(sonatypeUsername)
+                            password.set(sonatypePassword)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /*
     nexusPublishing {
         useStaging.set(true)
         this.packageGroup.set("com.uroria")
@@ -120,7 +148,7 @@ tasks {
             }
         }
     }
-
+*/
     publishing.publications.create<MavenPublication>("maven") {
         groupId = "com.uroria"
         artifactId = "core"
@@ -169,6 +197,7 @@ tasks {
         }
     }
 
+    /*
     signing {
         isRequired = System.getenv("CI") != null
 
@@ -178,4 +207,5 @@ tasks {
 
         sign(publishing.publications)
     }
+     */
 }
