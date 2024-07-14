@@ -23,7 +23,6 @@ junit-platform = "1.9.3"
 
 # Gradle plugins
 shadow = "8.1.1"
-jreleaser = "1.13.1"
 
 [libraries]
 
@@ -61,4 +60,3 @@ adventure = ["adventure-api", "minimessage", "adventure-ansi", "adventure-legacy
 
 [plugins]
 shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }
-jreleaser = { id = "org.jreleaser", version.ref = "jreleaser" }
