@@ -10,6 +10,7 @@ plugins {
     alias(libs.plugins.sonatypeCentralPortalPublisher)
 }
 
+group = "com.uroria"
 version = System.getenv("CORE_VERSION") ?: "0.0.0"
 
 val projectDescription = "Uroria Core Java Libraries"
