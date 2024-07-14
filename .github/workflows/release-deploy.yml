@@ -1,4 +1,4 @@
-name: Gradle Publish to Maven Central
+name: Release Maven Central Publication
 
 on:
   release:
