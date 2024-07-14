@@ -100,7 +100,7 @@ centralPortal {
     username = System.getenv("SONATYPE_USERNAME")
     password = System.getenv("SONATYPE_PASSWORD")
 
-    publishingType = PublishingType.USER_MANAGED
+    publishingType = PublishingType.AUTOMATIC
 
     name = rootProject.name
 
