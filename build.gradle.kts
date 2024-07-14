@@ -11,7 +11,6 @@ plugins {
 }
 
 version = System.getenv("CORE_VERSION") ?: "0.0.0"
-val channel = System.getenv("CORE_CHANNEL") ?: "local";
 
 val projectDescription = "Uroria Core Java Libraries"
 
