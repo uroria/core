@@ -7,7 +7,7 @@ plugins {
     `maven-publish`
     alias(libs.plugins.shadow)
     signing
-    id("net.thebugmc.gradle.sonatype-central-portal-publisher") version "1.2.3"
+    alias(libs.plugins.sonatypeCentralPortalPublisher)
 }
 
 version = System.getenv("CORE_VERSION") ?: "0.0.0"
