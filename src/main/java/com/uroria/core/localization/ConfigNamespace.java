@@ -2,6 +2,7 @@ package com.uroria.core.localization;
 
 import com.uroria.core.config.ConfigFile;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
+import it.unimi.dsi.fastutil.objects.ObjectArraySet;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import net.kyori.adventure.text.Component;
@@ -13,8 +14,10 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 @RequiredArgsConstructor
 final class ConfigNamespace implements Namespace {
@@ -27,7 +30,7 @@ final class ConfigNamespace implements Namespace {
     }
 
     @Override
-    public @NotNull Translation getTranslation(@Nullable String key) {
+    public @NotNull Translation getTranslation(@Nullable String key, TagResolver... parentResolvers) {
         if (key == null) return getTranslation("unknown");
         Translation translation = translationCache.get(key);
         if (translation != null) return translation;
@@ -38,7 +41,7 @@ final class ConfigNamespace implements Namespace {
 
             @Override
             public Namespace getNamespace() {
-                 return getSelf();
+                return getSelf();
             }
 
             @Override
@@ -53,6 +56,8 @@ final class ConfigNamespace implements Namespace {
 
             @Override
             public Component asComponent(@Nullable Locale locale, TagResolver... resolvers) {
+                Set<TagResolver> resolverSet = new ObjectArraySet<>(resolvers);
+                resolverSet.addAll(Arrays.asList(parentResolvers));
                 return MiniMessage.miniMessage().deserialize(asPlainString(locale), resolvers);
             }
 
