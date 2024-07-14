@@ -103,7 +103,7 @@ centralPortal {
 
     publishingType = PublishingType.AUTOMATIC
 
-    name = rootProject.name
+    name = project.name
 
     pom {
         name = rootProject.name
@@ -128,7 +128,7 @@ centralPortal {
         }
         scm {
             connection = "scm:git:git://github.com/uroria/core.git"
-            developerConnection = "scm:git:git@github.com:uroria/uroria.git"
+            developerConnection = "scm:git:git@github.com:uroria/core.git"
             url = "https://github.com/uroria/core"
             tag = "HEAD"
         }
