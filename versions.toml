@@ -6,6 +6,7 @@ gson = "2.10.1"
 slf4j = "1.7.36"
 sentry = "7.11.0"
 toml4j = "0.7.2"
+adventure = "4.17.0"
 
 paperApi = "1.21-R0.1-SNAPSHOT"
 velocityApi = "3.3.0-SNAPSHOT"
@@ -32,6 +33,11 @@ gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 slf4j = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j"}
 sentry = { group = "io.sentry", name = "sentry", version.ref = "sentry" }
 toml4j = { group = "com.moandjiezana.toml", name = "toml4j", version.ref = "toml4j" }
+adventure-api = { group = "net.kyori", name = "adventure-api", version.ref = "adventure" }
+minimessage = { group = "net.kyori", name = "adventure-text-minimessage", version.ref = "adventure" }
+adventure-ansi = { group = "net.kyori", name = "adventure-text-serializer-ansi", version.ref = "adventure" }
+adventure-legacy = { group = "net.kyori", name = "adventure-text-serializer-legacy", version.ref = "adventure" }
+adventure-gson = { group = "net.kyori", name = "adventure-text-serializer-gson", version.ref = "adventure" }
 
 paperApi = { group = "io.papermc.paper", name = "paper-api", version.ref = "paperApi" }
 velocityApi = { group = "com.velocitypowered", name = "velocity-api", version.ref = "velocityApi" }
@@ -51,6 +57,7 @@ junit-suite-engine = { group = "org.junit.platform", name = "junit-platform-suit
 
 [bundles]
 junit = ["junit-api", "junit-engine", "junit-params", "junit-suite-api", "junit-suite-engine"]
+adventure = ["adventure-api", "minimessage", "adventure-ansi", "adventure-legacy", "adventure-gson"]
 
 [plugins]
 shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }

@@ -18,6 +18,7 @@ dependencies {
     api(libs.slf4j)
     api(libs.sentry)
     api(libs.toml4j)
+    api(libs.bundles.adventure)
 
     compileOnlyApi(libs.lombok)
     annotationProcessor(libs.lombok)

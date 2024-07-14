@@ -60,7 +60,7 @@ public interface ConfigFile extends ConfigProvider {
 
     ConfigSection getSection(@NonNull String key);
 
-    default <T> T getOrDefault(String key, @NonNull T defaultValue) {
+    default <T> T getOrDefault(String key, T defaultValue) {
         Object obj = get(key).unwrapOr(defaultValue);
         return ClassWrapper.getFromDef(obj, defaultValue);
     }

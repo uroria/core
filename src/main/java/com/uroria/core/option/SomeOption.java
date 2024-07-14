@@ -64,7 +64,7 @@ final class SomeOption<T> implements Option<T> {
     }
 
     @Override
-    public @NotNull T unwrapOr(@NonNull T value) {
+    public @NotNull T unwrapOr(T value) {
         return this.value;
     }
 

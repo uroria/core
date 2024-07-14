@@ -45,7 +45,7 @@ public interface Option<T> {
     Stream<T> stream();
 
     @NotNull
-    T unwrapOr(@NonNull T value);
+    T unwrapOr(T value);
 
     @NotNull
     T unwrapOrGet(@NonNull Supplier<? extends T> supplier);
