@@ -47,33 +47,25 @@ public interface Result<T, E> {
 
     Stream<T> stream();
 
-    @NotNull
-    T unwrapOr(@NonNull T value);
+    T unwrapOr(@Nullable T value);
 
     @NotNull
     T unwrapOrGet(@NonNull Supplier<? extends T> supplier);
 
-    @NotNull
-    E unwrapErrOr(@NonNull E err);
+    E unwrapErrOr(@Nullable E err);
 
     @NotNull
     E unwrapErrOrGet(@NonNull Supplier<? extends E> supplier);
 
     /**
      * Returns value T or null.
-     * Made for testing purposes only, since
-     * not null-safe!
      */
-    @TestOnly
     @Nullable
     T unwrap();
 
     /**
      * Returns error E or null.
-     * Made for testing purposes only, since
-     * not null-safe!
      */
-    @TestOnly
     @Nullable
     E unwrapErr();
 }

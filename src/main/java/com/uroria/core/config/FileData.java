@@ -63,7 +63,7 @@ final class FileData implements ConfigFile {
 
     @Override
     public Set<String> singleLayerKeySet(String key) {
-        Object obj = get(key).unwrapOrNull();
+        Object obj = get(key).unwrap();
         return get(key) instanceof Map map ? ((Map<String, Object>) map).keySet() : new ObjectArraySet<>();
     }
 
@@ -74,7 +74,7 @@ final class FileData implements ConfigFile {
 
     @Override
     public Set<String> keySet(String key) {
-        Object obj = get(key).unwrapOrNull();
+        Object obj = get(key).unwrap();
         return obj instanceof Map map ? multiLayerKeySet((Map<String, Object>) map) : new ObjectArraySet<>();
     }
 

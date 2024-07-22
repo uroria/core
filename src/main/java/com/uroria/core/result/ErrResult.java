@@ -81,7 +81,7 @@ final class ErrResult<T, E> implements Result<T, E> {
     }
 
     @Override
-    public @NotNull T unwrapOr(@NonNull T value) {
+    public T unwrapOr(T value) {
         return value;
     }
 
@@ -91,7 +91,7 @@ final class ErrResult<T, E> implements Result<T, E> {
     }
 
     @Override
-    public @NotNull E unwrapErrOr(@NonNull E err) {
+    public E unwrapErrOr(E err) {
         return this.err;
     }
 

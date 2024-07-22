@@ -1,9 +1,7 @@
 package com.uroria.core.option;
 
 import lombok.NonNull;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.annotations.TestOnly;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -44,18 +42,10 @@ public interface Option<T> {
 
     Stream<T> stream();
 
-    @NotNull
-    T unwrapOr(T value);
+    T unwrapOr(@Nullable T value);
 
-    @NotNull
     T unwrapOrGet(@NonNull Supplier<? extends T> supplier);
 
-    @TestOnly
     @Nullable
     T unwrap();
-
-    @Nullable
-    default T unwrapOrNull() {
-        return unwrap();
-    }
 }
