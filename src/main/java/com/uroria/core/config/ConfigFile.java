@@ -10,6 +10,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -20,8 +21,19 @@ public interface ConfigFile extends ConfigProvider {
         return toml(new File(path));
     }
 
+    static Result<ConfigFile, Exception> toml(@NonNull String path, @Nullable InputStream template) {
+        return toml(new File(path), template);
+    }
+
     static Result<ConfigFile, Exception> toml(@NonNull File file) {
+        return toml(file, null);
+    }
+
+    static Result<ConfigFile, Exception> toml(@NonNull File file, @Nullable InputStream template) {
         try {
+            if (!file.exists() && template != null) {
+                Files.copy(template, file.toPath());
+            }
             TomlConfig config = new TomlConfig(file);
             return config.reload().map(cfg -> config.getData());
         } catch (Exception exception) {

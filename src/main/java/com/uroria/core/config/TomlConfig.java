@@ -6,6 +6,7 @@ import com.uroria.core.result.Result;
 import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
 import lombok.Getter;
 import lombok.NonNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.util.Map;
@@ -13,6 +14,7 @@ import java.util.Map;
 @Getter
 final class TomlConfig implements ConfigProvider {
     private Toml toml;
+    @Nullable
     private final File file;
     private final FileData data;
     private final Map<String, Object> mapping;
@@ -25,7 +27,7 @@ final class TomlConfig implements ConfigProvider {
         this(null, toml);
     }
 
-    TomlConfig(File file, Toml toml) {
+    TomlConfig(@Nullable File file, Toml toml) {
         this.toml = toml;
         this.file = file;
         this.mapping = new Object2ObjectLinkedOpenHashMap<>();
