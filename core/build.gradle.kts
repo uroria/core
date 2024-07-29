@@ -1,3 +1,4 @@
+description = "Core Library"
 
 dependencies {
     api(libs.fastutil)

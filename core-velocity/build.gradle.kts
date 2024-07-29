@@ -1,3 +1,5 @@
+description = "Core Libraries Velocity plugin"
+
 repositories {
     maven("https://repo.papermc.io/repository/maven-public/")
 }

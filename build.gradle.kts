@@ -63,7 +63,7 @@ subprojects {
         processResources {
             from(sourceSets.main.get().resources.srcDirs()) {
                 filter<ReplaceTokens>("tokens" to mapOf("version" to project.version.toString()))
-                filter<ReplaceTokens>("tokens" to mapOf("description" to project.description))
+                filter<ReplaceTokens>("tokens" to mapOf("description" to project.description.toString()))
 
                 duplicatesStrategy = DuplicatesStrategy.INCLUDE
             }
@@ -71,8 +71,6 @@ subprojects {
     }
 
     centralPortal {
-        println("${project.group}:${project.name}:${project.version}")
-
         username = System.getenv("SONATYPE_USERNAME")
         password = System.getenv("SONATYPE_PASSWORD")
 

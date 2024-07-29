@@ -1,3 +1,5 @@
+description = "Core Libraries Paper plugin"
+
 repositories {
     maven("https://repo.papermc.io/repository/maven-public/")
 }
