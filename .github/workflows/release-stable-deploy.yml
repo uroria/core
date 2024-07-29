@@ -31,33 +31,28 @@ jobs:
           ./gradlew :core-velocity:publishToCentralPortal --stacktrace
 
   hangar:
-    name: Publish to Hangar
+    name: Publish to Hangar and Modrinth
     runs-on: ubuntu-latest
     env:
       PROJECT_VERSION: ${{ github.event.release.tag_name }}
       PROJECT_CHANNEL: "stable"
       HANGAR_TOKEN: ${{ secrets.HANGAR_TOKEN }}
+      MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
     steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 21
+        uses: actions/setup-java@v2
+        with:
+          java-version: '21'
+          distribution: 'temurin'
       - name: Build universal-jar
         run: |
           ./gradlew :universal:shadowJar --stacktrace
 
-      - name: Publish
+      - name: Publish to Hangar
         run: |
           ./gradlew :universal:publishAllPublicationsToHangar --stacktrace
 
-  modrinth:
-    name: Publish to Modrinth
-    runs-on: ubuntu-latest
-    env:
-      PROJECT_VERSION: ${{ github.event.release.tag_name }}
-      PROJECT_CHANNEL: "stable"
-      MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
-    steps:
-      - name: Build universal-jar
-        run: |
-          ./gradlew :universal:shadowJar --stacktrace
-
-      - name: Publish
+      - name: Publish to Modrinth
         run: |
           ./gradlew :universal:modrinth --stacktrace

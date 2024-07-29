@@ -1,4 +1,4 @@
-name: Build
+name: Test
 on:
   workflow_dispatch:
   pull_request:
@@ -8,6 +8,7 @@ on:
 
 jobs:
   build:
+    name: Build
     runs-on: ubuntu-latest
     if: "!contains(github.event.commits[0].message, '[ci-skip]')"
     steps:
