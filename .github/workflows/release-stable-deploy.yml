@@ -1,4 +1,4 @@
-name: Release Maven Central, Modrinth and HangarMC Publication
+name: Publish Stable
 
 on:
   release:
@@ -6,15 +6,14 @@ on:
       - published
 
 jobs:
-  build:
+  portal:
+    name: Publish to Maven Central
     runs-on: ubuntu-latest
     env:
       SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
       SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
       GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
       GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-      MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
-      HANGAR_TOKEN: ${{ secrets.HANGAR_TOKEN }}
       PROJECT_VERSION: ${{ github.event.release.tag_name }}
       PROJECT_CHANNEL: "stable"
     steps:
@@ -31,14 +30,34 @@ jobs:
           ./gradlew :core-paper:publishToCentralPortal --stacktrace
           ./gradlew :core-velocity:publishToCentralPortal --stacktrace
 
+  hangar:
+    name: Publish to Hangar
+    runs-on: ubuntu-latest
+    env:
+      PROJECT_VERSION: ${{ github.event.release.tag_name }}
+      PROJECT_CHANNEL: "stable"
+      HANGAR_TOKEN: ${{ secrets.HANGAR_TOKEN }}
+    steps:
       - name: Build universal-jar
         run: |
           ./gradlew :universal:shadowJar --stacktrace
 
-      - name: Publish universal-jar to Modrinth
-        run: |
-          ./gradlew :universal:modrinth --stacktrace
-
-      - name: Publish universal-jar to HangarMC
+      - name: Publish
         run: |
           ./gradlew :universal:publishAllPublicationsToHangar --stacktrace
+
+  modrinth:
+    name: Publish to Modrinth
+    runs-on: ubuntu-latest
+    env:
+      PROJECT_VERSION: ${{ github.event.release.tag_name }}
+      PROJECT_CHANNEL: "stable"
+      MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+    steps:
+      - name: Build universal-jar
+        run: |
+          ./gradlew :universal:shadowJar --stacktrace
+
+      - name: Publish
+        run: |
+          ./gradlew :universal:modrinth --stacktrace

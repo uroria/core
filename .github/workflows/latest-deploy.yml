@@ -1,11 +1,12 @@
-name: Latest Sonatype publish
+name: Publish Latest
 
 on:
   push:
     branches: [ main ]
 
 jobs:
-  build:
+  portal:
+    name: Publish to Maven Central
     runs-on: ubuntu-latest
     if: "!contains(github.event.commits[0].message, '[ci-skip]')"
     env:
@@ -27,7 +28,7 @@ jobs:
         run: |
           echo "short_commit_hash=${GITHUB_SHA::10}" >> $GITHUB_OUTPUT
 
-      - name: Publish to Sonatype Central Portal
+      - name: Publish
         env:
           PROJECT_VERSION: ${{ steps.vars.outputs.short_commit_hash }}
         run: |
