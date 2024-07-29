@@ -1,5 +1,6 @@
 import com.github.jengelman.gradle.plugins.shadow.ShadowPlugin
-import net.thebugmc.gradle.sonatypepublisher.PublishingType
+import net.thebugmc.gradle.sonatypepublisher.PublishingType.*
+import net.thebugmc.gradle.sonatypepublisher.SonatypeCentralPortalPublisherPlugin
 import org.apache.tools.ant.filters.ReplaceTokens
 
 plugins {
@@ -11,42 +12,25 @@ plugins {
 }
 
 group = "com.uroria"
-version = System.getenv("CORE_VERSION") ?: "0.0.0"
+val channel = System.getenv("PROJECT_CHANNEL") ?: "dev" // dev (local), stable, latest
 
-val projectDescription = "Uroria Core Java Libraries"
-
-dependencies {
-    api(libs.fastutil)
-    api(libs.gson)
-    api(libs.slf4j)
-    api(libs.sentry)
-    api(libs.toml4j)
-    api(libs.bundles.adventure)
-
-    compileOnlyApi(libs.lombok)
-    annotationProcessor(libs.lombok)
-
-    compileOnlyApi(libs.jetbrainsAnnotations)
-    annotationProcessor(libs.jetbrainsAnnotations)
-
-    testImplementation(libs.bundles.junit)
-}
-
-java {
-    withSourcesJar()
-    withJavadocJar()
-}
-
-allprojects {
+subprojects {
     apply<JavaLibraryPlugin>()
+    apply<SonatypeCentralPortalPublisherPlugin>()
+    apply<ShadowPlugin>()
+    apply<SigningPlugin>()
 
-    group = "com.uroria"
-    version = rootProject.version
-    description = projectDescription
+    java {
+        withSourcesJar()
+        withJavadocJar()
+    }
 
     repositories {
         mavenCentral()
     }
+
+    version = System.getenv("PROJECT_VERSION") ?: "0.0.0"
+    group = "com.uroria.$channel"
 
     java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
@@ -79,73 +63,65 @@ allprojects {
         processResources {
             from(sourceSets.main.get().resources.srcDirs()) {
                 filter<ReplaceTokens>("tokens" to mapOf("version" to project.version.toString()))
-                filter<ReplaceTokens>("tokens" to mapOf("description" to projectDescription))
+                filter<ReplaceTokens>("tokens" to mapOf("description" to project.description))
 
                 duplicatesStrategy = DuplicatesStrategy.INCLUDE
             }
         }
     }
-}
 
-subprojects {
-    apply<ShadowPlugin>()
-}
+    centralPortal {
+        println("${project.group}:${project.name}:${project.version}")
 
-sourceSets {
-    main {
-        java.srcDir(file("src/main/java"))
-    }
-}
+        username = System.getenv("SONATYPE_USERNAME")
+        password = System.getenv("SONATYPE_PASSWORD")
 
-centralPortal {
-    username = System.getenv("SONATYPE_USERNAME")
-    password = System.getenv("SONATYPE_PASSWORD")
+        publishingType = if (channel == "latest") AUTOMATIC else USER_MANAGED
 
-    publishingType = PublishingType.AUTOMATIC
+        name = project.name
 
-    name = project.name
-
-    pom {
-        name = rootProject.name
-        url = "https://github.com/uroria/core"
-        description = projectDescription
-
-        licenses {
-            license {
-                name = "Apache 2.0"
-                url = "https://github.com/uroria/core/blob/main/LICENSE"
-            }
-        }
-
-        developers {
-            developer {
-                id = "julian-siebert"
-                name = "Julian Siebert"
-                organization = "Uroria"
-                organizationUrl = "https://github.com/uroria"
-                email = "mail@julian-siebert.de"
-            }
-        }
-        scm {
-            connection = "scm:git:git://github.com/uroria/core.git"
-            developerConnection = "scm:git:git@github.com:uroria/core.git"
+        pom {
+            name = project.name
             url = "https://github.com/uroria/core"
-            tag = "HEAD"
-        }
+            description = project.description
 
-        ciManagement {
-            system = "GitHub Actions"
-            url = "https://github.com/uroria/core/actions"
+            licenses {
+                license {
+                    name = "Apache 2.0"
+                    url = "https://github.com/uroria/core/blob/main/LICENSE"
+                }
+            }
+
+            developers {
+                developer {
+                    id = "julian-siebert"
+                    name = "Julian Siebert"
+                    organization = "Uroria"
+                    organizationUrl = "https://github.com/uroria"
+                    email = "mail@julian-siebert.de"
+                }
+            }
+            scm {
+                connection = "scm:git:git://github.com/uroria/core.git"
+                developerConnection = "scm:git:git@github.com:uroria/core.git"
+                url = "https://github.com/uroria/core"
+                tag = "HEAD"
+            }
+
+            ciManagement {
+                system = "GitHub Actions"
+                url = "https://github.com/uroria/core/actions"
+            }
         }
     }
-}
 
-signing {
-    isRequired = System.getenv("CI") != null
+    signing {
+        isRequired = System.getenv("CI") != null
 
-    val privateKey = System.getenv("GPG_PRIVATE_KEY")
-    val passphrase = System.getenv("GPG_PASSPHRASE")
-    useInMemoryPgpKeys(privateKey, passphrase)
+        val privateKey = System.getenv("GPG_PRIVATE_KEY")
+        val passphrase = System.getenv("GPG_PASSPHRASE")
+        useInMemoryPgpKeys(privateKey, passphrase)
 
-    sign(publishing.publications)
+        sign(publishing.publications)
+    }
 }

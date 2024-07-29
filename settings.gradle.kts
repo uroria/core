@@ -8,12 +8,12 @@ dependencyResolutionManagement {
     }
 }
 
+include("core")
+
 sequenceOf(
     "paper",
     "velocity",
-    "fabric",
-    "universal"
+    "fabric"
 ).forEach {
     include("core-$it")
-    project(":core-$it").projectDir = file(it)
 }

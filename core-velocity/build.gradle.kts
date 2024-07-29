@@ -3,8 +3,8 @@ repositories {
 }
 
 dependencies {
-    implementation(rootProject)
-    annotationProcessor(rootProject)
+    implementation(project(":core"))
+    annotationProcessor(project(":core"))
 
     compileOnly(libs.velocityApi)
     annotationProcessor(libs.velocityApi)

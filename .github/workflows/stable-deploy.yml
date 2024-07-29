@@ -2,7 +2,8 @@ name: Release Maven Central Publication
 
 on:
   release:
-    types: [published]
+    types:
+      - published
 
 jobs:
   build:
@@ -12,6 +13,8 @@ jobs:
       SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
       GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
       GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+      PROJECT_VERSION: ${{ github.event.release.tag_name }}
+      PROJECT_CHANNEL: "stable"
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 21
@@ -20,13 +23,8 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      - name: Set version
-        id: vars
-        run: echo "VERSION=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
-
-      - name: Publish to Sonatype
-        env:
-          CORE_VERSION: ${{ env.version }}
+      - name: Publish to Sonatype Central Portal
         run: |
-          ./gradlew publishToCentralPortal
-          echo "Version: ${SHORT_COMMIT_HASH}" >> $GITHUB_STEP_SUMMARY
+          ./gradlew :core:publishToCentralPortal
+          ./gradlew :core-paper:publishToCentralPortal
+          ./gradlew :core-velocity:publishToCentralPortal

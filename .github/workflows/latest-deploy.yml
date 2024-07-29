@@ -1,4 +1,4 @@
-name: Push Maven Central Publication
+name: Latest Sonatype publish
 
 on:
   push:
@@ -7,12 +7,13 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: "contains(github.event.commits[0].message, '[pub]')"
+    if: "!contains(github.event.commits[0].message, '[ci-skip]')"
     env:
       SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
       SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
       GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
       GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+      PROJECT_CHANNEL: "latest"
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK 21
@@ -26,9 +27,11 @@ jobs:
         run: |
           echo "short_commit_hash=${GITHUB_SHA::10}" >> $GITHUB_OUTPUT
 
-      - name: Publish to Sonatype
+      - name: Publish to Sonatype Central Portal
         env:
-          CORE_VERSION: ${{ steps.vars.outputs.short_commit_hash }}
+          PROJECT_VERSION: ${{ steps.vars.outputs.short_commit_hash }}
         run: |
-          ./gradlew publishToCentralPortal
+          ./gradlew :core:publishToCentralPortal
+          ./gradlew :core-paper:publishToCentralPortal
+          ./gradlew :core-velocity:publishToCentralPortal
           echo "Version: ${SHORT_COMMIT_HASH}" >> $GITHUB_STEP_SUMMARY
