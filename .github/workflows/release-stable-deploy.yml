@@ -1,0 +1,44 @@
+name: Release Maven Central, Modrinth and HangarMC Publication
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+      SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+      GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+      GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+      MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+      HANGAR_TOKEN: ${{ secrets.HANGAR_TOKEN }}
+      PROJECT_VERSION: ${{ github.event.release.tag_name }}
+      PROJECT_CHANNEL: "stable"
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 21
+        uses: actions/setup-java@v2
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Publish to Sonatype Central Portal
+        run: |
+          ./gradlew :core:publishToCentralPortal --stacktrace
+          ./gradlew :core-paper:publishToCentralPortal --stacktrace
+          ./gradlew :core-velocity:publishToCentralPortal --stacktrace
+
+      - name: Build universal-jar
+        run: |
+          ./gradlew :universal:shadowJar --stacktrace
+
+      - name: Publish universal-jar to Modrinth
+        run: |
+          ./gradlew :universal:modrinth --stacktrace
+
+      - name: Publish universal-jar to HangarMC
+        run: |
+          ./gradlew :universal:publishAllPublicationsToHangar --stacktrace

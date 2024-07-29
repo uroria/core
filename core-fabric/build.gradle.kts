@@ -1,6 +1,6 @@
 description = "Core Libraries Fabric mod"
 
 dependencies {
-    implementation(project(":core"))
+    api(project(":core"))
     annotationProcessor(project(":core"))
 }

@@ -5,7 +5,7 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":core"))
+    api(project(":core"))
     annotationProcessor(project(":core"))
 
     compileOnly(libs.velocityApi)

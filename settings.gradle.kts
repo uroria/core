@@ -8,7 +8,7 @@ dependencyResolutionManagement {
     }
 }
 
-include("core")
+include("core", "universal")
 
 sequenceOf(
     "paper",

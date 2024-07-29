@@ -24,6 +24,8 @@ junit-platform = "1.9.3"
 # Gradle plugins
 shadow = "8.1.1"
 sonatypeCentralPortalPublisher = "1.2.3"
+minotaur = "2.+"
+hangarPublish = "0.1.2"
 
 [libraries]
 
@@ -62,3 +64,5 @@ adventure = ["adventure-api", "minimessage", "adventure-ansi", "adventure-legacy
 [plugins]
 shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }
 sonatypeCentralPortalPublisher = { id = "net.thebugmc.gradle.sonatype-central-portal-publisher", version.ref = "sonatypeCentralPortalPublisher" }
+minotaur = { id = "com.modrinth.minotaur", version.ref = "minotaur" }
+hangarPublish = { id = "io.papermc.hangar-publish-plugin", version.ref = "hangarPublish" }
